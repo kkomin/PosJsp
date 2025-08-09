@@ -1,7 +1,10 @@
 tasks.json
+launch.json
 
 # db 정보 파일
 src/security/DBConfig.java
 
 # ojdbc 드라이버
 lib/ojdbc11.jar
+
+.vscode
