@@ -7,10 +7,10 @@
     String pw = request.getParameter("password");
     
     UserDAO dao = new UserDAO();    		
-    UserDTO user = dao.login(id, pw, "");
+    UserDTO user = dao.login(id, pw);
+    
 
-
-    if(id != null && pw != null) {
+    if(user != null) {
         session.setAttribute("userId", user.getUserId());
         session.setAttribute("userName", user.getUserName());
         response.sendRedirect("main.jsp");
