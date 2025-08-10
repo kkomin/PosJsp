@@ -25,7 +25,8 @@ public class UserDAO {
                 user = new UserDTO(
                 		rs.getString("user_id"), 
                 		rs.getString("user_pw"), 
-                		rs.getString("user_name"));
+                		rs.getString("user_name"),
+                		rs.getInt("emp_id"));
             }
 
         } catch (Exception e) {
