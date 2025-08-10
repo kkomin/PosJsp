@@ -1,9 +1,7 @@
-package src.main;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import src.DB.ConnectDB;
+import DB.ConnectDB;
 
 public class LoginManager {
     public static void main(String[] args) {
