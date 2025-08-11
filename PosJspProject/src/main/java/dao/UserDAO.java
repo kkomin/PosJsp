@@ -11,7 +11,7 @@ public class UserDAO {
     public UserDTO login(String userId, String userPw) {
         UserDTO user = null;
 
-        String sql = "SELECT user_id, user_pw, user_name from employees where user_id = ? AND user_pw = ?";
+        String sql = "SELECT user_id, user_pw, user_name, emp_id from employees where user_id = ? AND user_pw = ?";
 
         try (Connection conn = ConnectDB.getConnectionDB();
                 PreparedStatement pre = conn.prepareStatement(sql)) {
@@ -25,7 +25,8 @@ public class UserDAO {
                 user = new UserDTO(
                 		rs.getString("user_id"), 
                 		rs.getString("user_pw"), 
-                		rs.getString("user_name"));
+                		rs.getString("user_name"),
+                		rs.getInt("emp_id"));
             }
 
         } catch (Exception e) {
