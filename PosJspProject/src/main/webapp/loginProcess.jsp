@@ -1,3 +1,4 @@
+<%@page import="dto.LoginLogDTO"%>
 <%@page import="dao.LoginLogDAO"%>
 <%@page import="dto.UserDTO"%>
 <%@page import="dao.UserDAO"%>
@@ -17,9 +18,12 @@
         
         // 로그인한 시간 저장 및 조회
         LoginLogDAO loginDAO = new LoginLogDAO();
-        loginDAO.insertLoginLog(user.getEmpId());
+        LoginLogDTO loginLog = loginDAO.insertLoginLog(user.getEmpId());
         
         // 세션에 로그인 시간 정보 저장
+        if (loginLog != null) {
+            session.setAttribute("loginTime", loginLog.getLoginTime());
+        }
         
         response.sendRedirect("main.jsp");
     } else {
