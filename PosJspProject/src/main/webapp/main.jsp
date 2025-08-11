@@ -1,3 +1,5 @@
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Date"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -56,7 +58,7 @@
    // name 가져오기
    String name = (String)session.getAttribute("userName");
    // 로그인한 시간 가져오기
-   Date time = (Date)session.getAttribute("loginTime");
+   Timestamp time = (Timestamp)session.getAttribute("loginTime");
    
    // 세션 없을 경우 ?
    if(name == null) {
@@ -68,12 +70,20 @@
        response.sendRedirect("login.jsp");
        return;
    }
-   %>
+   
+    Timestamp loginTime = (Timestamp)session.getAttribute("loginTime");
+    String loginTimestr = "로그인 시간 없음";
+    if (loginTime != null) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+        loginTimestr = sf.format(loginTime);
+    } 
+    %>
+   
    <div class="container">
     <div class="header-container">
 	    <h2 class="user-info"><%= name %> 님 환영합니다.</h2>
 	    <!-- name을 추후 로그인한 시간으로 변경 필요 -->
-	    <h4 class="login-time">로그인한 시간 : <%= time %></h4>
+	    <h4 class="login-time">로그인한 시간 : <%= loginTimestr %></h4>
     </div>
     <div class="main-container">
         <div class="register-container" onclick="location.href='register.jsp'">

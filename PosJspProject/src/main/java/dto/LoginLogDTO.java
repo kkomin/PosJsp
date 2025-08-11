@@ -1,12 +1,13 @@
 package dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class LoginLogDTO {
     public int logId;
     public int empId;
-    public Date loginTime;
-    public Date logoutTime;
+    public Timestamp loginTime;
+    public Timestamp logoutTime;
     public int workMinutes;
     public int dailyWage;
     
@@ -15,7 +16,7 @@ public class LoginLogDTO {
         return empId;
     }
     
-    public Date getLoginTime() {
+    public Timestamp getLoginTime() {
         return loginTime;
     }
     
@@ -23,7 +24,7 @@ public class LoginLogDTO {
         return logId;
     }
     
-    public Date getLogoutTime() {
+    public Timestamp getLogoutTime() {
         return logoutTime;
     }
     
@@ -43,11 +44,11 @@ public class LoginLogDTO {
         this.logId = logId;
     }
     
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(Timestamp loginTime) {
         this.loginTime = loginTime;
     }
     
-    public void setLogoutTime(Date logoutTime) {
+    public void setLogoutTime(Timestamp logoutTime) {
         this.logoutTime = logoutTime;
     }
     
