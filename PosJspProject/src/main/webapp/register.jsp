@@ -9,14 +9,15 @@
     .body-container {
         padding: 20px;
     }
-   
-    
     .body-container > input {
         padding: 10px;
     }
 
     .check19 {
-        margin-Top: 20px;
+        margin-top: 20px;
+    }
+    .btn {
+        margin-top: 30px;
     }
 </style>
 </head>
@@ -30,9 +31,14 @@
     <input type="number" name="price" placeholder="가격을 입력하세요.">
     <h3>유통기한</h3>
     <input type="number" name="expiration" placeholder="유통기한을 입력하세요.">
+    <h3>수량</h3>
+    <input type="number" name="stock" placeholder="수량을 입력하세요." min="10" value="10">
     <div class="check19">
         <span>19금 여부</span>
-        <input type="checkbox" name="product_name" placeholder="제품명을 입력하세요.">
+        <input type="checkbox" name="is_adult">
+    </div>
+    <div class="btn">
+        <button>등록</button>
     </div>
 </div>
 </body>
