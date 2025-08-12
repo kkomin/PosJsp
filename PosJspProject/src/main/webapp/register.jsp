@@ -22,7 +22,7 @@
 </style>
 </head>
 <body>
-<div class="body-container">
+<form action="registerProcess.jsp" method="get" class="body-container">
     <h3>제품명</h3>
     <input type="text" name="product" placeholder="제품명을 입력하세요.">
     <h3>제조사</h3>
@@ -40,6 +40,6 @@
     <div class="btn">
         <button>등록</button>
     </div>
-</div>
+</form>
 </body>
 </html>
