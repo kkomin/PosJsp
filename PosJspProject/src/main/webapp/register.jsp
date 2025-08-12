@@ -22,9 +22,9 @@
 </style>
 </head>
 <body>
-<form action="registerProcess.jsp" method="get" class="body-container">
+<form id="product_form" action="registerProcess.jsp" method="post" class="body-container">
     <h3>제품명</h3>
-    <input type="text" name="product" placeholder="제품명을 입력하세요.">
+    <input type="text" name="prodName" placeholder="제품명을 입력하세요.">
     <h3>제조사</h3>
     <input type="text" name="company" placeholder="제조사를 입력하세요.">
     <h3>가격</h3>
@@ -35,10 +35,11 @@
     <input type="number" name="stock" placeholder="수량을 입력하세요." min="10" value="10">
     <div class="check19">
         <span>19금 여부</span>
-        <input type="checkbox" name="is_adult">
+        <input type="checkbox" name="isAdult" value="Y">
     </div>
     <div class="btn">
-        <button>등록</button>
+        <button type="submit">등록</button>
+        <button type="button" onclick="location.href='main.jsp';">취소</button>
     </div>
 </form>
 </body>
