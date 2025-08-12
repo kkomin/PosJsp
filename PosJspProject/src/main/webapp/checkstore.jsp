@@ -1,5 +1,15 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="dto.ProductDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="service.ProductService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	ProductService service = new ProductService();
+	List<ProductDTO> productList = service.getAllProducts();
+%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +28,28 @@
             <tr>
                 <th>제품명</th>
                 <th>회사명</th>
+                <th>가격</th>
                 <th>수량</th>
-                <th>19금 여부</th>
                 <th>유통기한</th>
+                <th>19금 여부</th>
             </tr>
         </thead>
         <tbody>
+        <%
+	        for(ProductDTO product : productList) {
+        %>
+        <tr>
+           <td><%= product.getProdName() %></td>
+           <td><%= product.getCompany() %></td>
+           <td><%= product.getPrice() %> 원</td>
+           <td><%= product.getStock() %></td>
+           <td><%= new SimpleDateFormat("yyyy-MM-dd").format(product.getExpiration()) %></td>
+           <td><%= (product.getIsAdult() == '1') ? "Y" : "N" %></td>
+        </tr>
+        <%
+            }
+        %>
+        </tbody>
     </table>
 </body>
 </html>
