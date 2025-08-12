@@ -11,7 +11,7 @@ public class RegisterService {
 		public boolean registerProduct(String prodName, String company, String expirationStr, char isAdult, int price, int stock) {
 			try {
 				// 날짜 변환
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyMMdd");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 				LocalDate localDate = LocalDate.parse(expirationStr, formatter);
 				Date expiration = Date.valueOf(localDate);
 				
