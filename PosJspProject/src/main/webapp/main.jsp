@@ -92,7 +92,7 @@
         </div>
         <div class="search-container" onclick="location.href='search.jsp'">
 	        <img src="images/search.png" class="image">
-	        <p>재품 조회</p>
+	        <p>제품 조회</p>
         </div>
         <div class="store-container" onclick="location.href='store.jsp'">
 	        <img src="images/search.png" class="image">
