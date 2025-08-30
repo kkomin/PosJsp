@@ -11,6 +11,7 @@ public class SalesDTO {
     private int totalPrice;
     private String paymentType;
     private Character isAdult;
+    private String empName;
 
     public SalesDTO() {}
 
@@ -45,5 +46,9 @@ public class SalesDTO {
 
     public int getTotalPrice() {
         return totalPrice;
+    }
+    
+    public String getUserName() {
+    	return empName;
     }
 }
