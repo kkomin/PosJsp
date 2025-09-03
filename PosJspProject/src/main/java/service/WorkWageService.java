@@ -26,15 +26,20 @@ public class WorkWageService {
             Timestamp loginTimestamp = lastLog.getLoginTime();
             LocalDateTime loginTime = loginTimestamp.toLocalDateTime();
             LocalDateTime logoutTime = LocalDateTime.now();
-            int hourlyWage = lastLog.getHourlyWage();
 
             // 근무 시간 계산 (분)
             long workMinutes = Duration.between(loginTime, logoutTime).toMinutes();
 
-            // 일급 계산 = 시급/60 * 근무시간
-            int dailyWage = (int) Math.round(((float) hourlyWage / 60) * workMinutes);
+            // DB에서 기본 시급 가져오기
+            int hourlyWage = lastLog.getHourlyWage();
+            if (hourlyWage <= 0) {
+                System.out.println("[WARN] logout: hourlyWage is " + hourlyWage + " for empId=" + user.getEmpId());
+            }
 
-            // DB에 로그아웃 정보 업데이트
+            // 일급 계산
+            int dailyWage = (int) Math.round(((double) hourlyWage / 60) * workMinutes);
+
+            // DB 업데이트
             dao.updateLogout(lastLog.getLogId(), logoutTime, workMinutes, dailyWage);
 
             return new LoginResult(workMinutes, dailyWage);
