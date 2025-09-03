@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import DB.ConnectDB;
+import dto.PaymentDTO;
 import dto.ProductDTO;
 
 public class CheckStockDAO {
@@ -39,5 +41,22 @@ public class CheckStockDAO {
             e.printStackTrace();
         }
         return list;
+    }
+    
+ // 재고 업데이트
+ // 특정 제품 재고 갱신
+    public void updateStock(int prodId, int newStock) {
+        String sql = "UPDATE products SET stock = ? WHERE prod_id = ?";
+
+        try (Connection conn = ConnectDB.getConnectionDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, newStock);
+            pstmt.setInt(2, prodId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
