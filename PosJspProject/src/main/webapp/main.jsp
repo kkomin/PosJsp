@@ -110,7 +110,7 @@
 	        <img src="images/search.png" class="image">
 	        <p>매출 조회</p>
         </div>
-        <div class="dailywages-container" onclick="location.href='dailywages.jsp'">
+        <div class="dailywages-container" onclick="location.href='logout.jsp'">
 	        <img src="images/search.png" class="image">
 	        <p>일급 정산</p>
         </div>
