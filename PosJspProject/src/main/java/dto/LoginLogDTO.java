@@ -9,6 +9,7 @@ public class LoginLogDTO {
     public Timestamp logoutTime;
     public int workMinutes;
     public int dailyWage;
+    private int hourlyWage;
     
 
     public int getEmpId() {
@@ -27,13 +28,9 @@ public class LoginLogDTO {
         return logoutTime;
     }
     
-    public int getWorkMinutes() {
-        return workMinutes;
-    }
-    
-    public int getDailyWage() {
-        return dailyWage;
-    }
+    public int getHourlyWage() {
+		return hourlyWage;
+	}
     
     public void setEmpId(int empId) {
         this.empId = empId;
@@ -51,11 +48,7 @@ public class LoginLogDTO {
         this.logoutTime = logoutTime;
     }
     
-    public void setWorkMinutes(int workMinutes) {
-        this.workMinutes = workMinutes;
-    }
-    
-    public void setDailyWage(int dailyWage) {
-        this.dailyWage = dailyWage;
-    }
+    public void setHourlyWage(int hourlyWage) {
+		this.hourlyWage = hourlyWage;
+	}
 }
