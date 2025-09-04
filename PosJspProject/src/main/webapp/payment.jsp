@@ -1,3 +1,5 @@
+<%@page import="dao.SaleDAO"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="dto.PaymentDTO"%>
 <%@ page import="service.PaymentService" %>
 <%@ page import="dto.ProductDTO" %>
@@ -11,6 +13,29 @@
 </head>
 <body>
 <h2>결제 결과</h2>
+<%
+    String message = "";
+    if(request.getMethod().equalsIgnoreCase("POST")) {
+        try {
+            int prodId = Integer.parseInt(request.getParameter("prodId"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            int price = Integer.parseInt(request.getParameter("price"));
+            String payMethod = request.getParameter("payMethod");
+            boolean isAdult = true; // 필요시 체크 로직 추가
+
+            int totalPrice = price * quantity;
+
+            try (Connection conn = DB.ConnectDB.getConnectionDB()) {
+                SaleDAO saleDao = new SaleDAO();
+                int saleId = saleDao.insertSale(1, totalPrice, payMethod, isAdult); // empId 예시: 1
+                saleDao.insertSaleItem(saleId, prodId, quantity, totalPrice);
+                message = "결제가 완료되었습니다. 총액: " + totalPrice + " 원";
+            }
+        } catch(Exception e) {
+            message = "결제 중 오류 발생: " + e.getMessage();
+        }
+    }
+%>
 <%
     // 파라미터 가져오기
     String prodIdStr = request.getParameter("prodId");
