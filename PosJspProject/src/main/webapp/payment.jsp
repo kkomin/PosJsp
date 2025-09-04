@@ -47,6 +47,6 @@
 <p>결제 상태: <%= result %></p>
 <p>잔액: <%= service.getCurrentBalance() %> 원</p>
 
-<a href="pay.jsp">다음 결제</a>
+<button type="button" onclick="location.href='main.jsp';">메인으로</button>
 </body>
 </html>
