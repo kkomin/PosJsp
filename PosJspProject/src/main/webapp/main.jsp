@@ -94,7 +94,7 @@
 	        <img src="images/search.png" class="image">
 	        <p>제품 조회</p>
         </div>
-        <div class="store-container" onclick="location.href='store.jsp'">
+        <div class="store-container" onclick="location.href='inventory.jsp'">
 	        <img src="images/search.png" class="image">
 	        <p>입고 처리</p>
         </div>
