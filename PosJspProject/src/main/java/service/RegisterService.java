@@ -8,12 +8,13 @@ import dao.ProductDAO;
 
 public class RegisterService {
 	private ProductDAO productDAO = new ProductDAO(); 
-		public boolean registerProduct(String prodName, String company, String expirationStr, char isAdult, int price, int stock) {
+		public boolean registerProduct(String prodName, String company, String expirationStr, String isAdultStr, int price, int stock) {
 			try {
 				// 날짜 변환
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 				LocalDate localDate = LocalDate.parse(expirationStr, formatter);
 				Date expiration = Date.valueOf(localDate);
+				char isAdult = isAdultStr.charAt(0);
 				
 				// 유효성 검사 추가 예정
 				
