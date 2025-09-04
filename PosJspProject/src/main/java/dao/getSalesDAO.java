@@ -16,7 +16,7 @@ public class getSalesDAO {
 		List<SalesDTO> sales = new ArrayList<SalesDTO>();
 		
 		String getSaleSql = """
-				SELECT s.sale_id, s.sale_date, e.user_name, s.total_price, s.payment_type
+				SELECT s.sale_id, s.emp_id, s.sale_date, e.user_name, s.total_price, s.payment_type
                 FROM SALES s
                 JOIN EMPLOYEES e ON s.emp_id = e.emp_id
                 WHERE TO_CHAR(s.sale_date, 'YYYYMMDD') = ?
