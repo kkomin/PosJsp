@@ -5,11 +5,11 @@
 String product = request.getParameter("prodName");
 String company = request.getParameter("company");
 String expiration = request.getParameter("expiration");
-
 String isAdultStr = request.getParameter("isAdult");
+
 System.out.println("isAdultStr : " + isAdultStr);
-char isAdult = (isAdultStr != null && isAdultStr.equals("on"))? '1' : '0';
-System.out.println("isAdult : " + isAdult);
+isAdultStr = (isAdultStr != null && isAdultStr.equals("on")) ? "0" : "1";
+System.out.println("isAdult : " + isAdultStr);
 
 String priceStr = request.getParameter("price");
 int price = 0;
@@ -24,7 +24,7 @@ if(priceStr != null && !priceStr.trim().isEmpty()) {
 int stock = Integer.parseInt(request.getParameter("stock"));
 
 RegisterService service = new RegisterService();
-boolean result = service.registerProduct(product, company, expiration, isAdult, price, stock);
+boolean result = service.registerProduct(product, company, expiration, isAdultStr, price, stock);
 
 if(result) {
     %>
