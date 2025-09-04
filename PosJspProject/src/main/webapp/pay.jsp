@@ -17,14 +17,17 @@
 </style>
 <script>
 	let unitPrice = 0; // 선택 제품 단가
+	let isAdultProduct = false; // 성인 제품 여부
 
-	function selectProduct(prodId, prodName, price) {
+	function selectProduct(prodId, prodName, price, adult) {
 	    document.getElementById("prodId").value = prodId;
 	    document.getElementById("prodName").value = prodName;
 	    document.getElementById("price").value = price;
 	    unitPrice = parseInt(price);
-        updateTotal();
+	    isAdultProduct = adult;
+	    updateTotal();
 	}
+
 	
 	function updateTotal() {
         const quantity = parseInt(document.getElementById("quantity").value) || 1;
@@ -58,21 +61,31 @@
     	const unitPrice = parseInt(document.getElementById("price").value) || 0;
     	const total = unitPrice * quantity;
         
+    	 // 성인 제품 여부 확인
+        if (isAdultProduct) {
+            const adultConfirm = confirm("이 제품은 성인용입니다. 성인입니까?");
+            if (!adultConfirm) {
+                alert("성인 인증이 필요하여 결제가 취소되었습니다.");
+                return false;
+            }
+        }
+
+        // 카드 결제 검증
         if (method === 'card') {
             const cardNumber = document.getElementById('cardNumber').value.trim();
-
-            // 숫자만 입력되었는지와 16자리인지 체크
             const cardRegex = /^[0-9]{16}$/;
-
             if (!cardRegex.test(cardNumber)) {
                 alert("카드 번호가 잘못되었습니다. 16자리 숫자를 입력해주세요.");
                 document.getElementById("cardNumber").focus();
-                return false; // form 제출 막기
+                return false;
             }
-        } else if (method === 'cash') {
-        	const cash = parseInt(document.getElementById("cashPaid").value) || 0;
-            if(cash < total) {
-                alert("금액이 부족합니다.);
+        }
+
+        // 현금 결제 검증
+        if (method === 'cash') {
+            const cash = parseInt(document.getElementById("cashPaid").value) || 0;
+            if (cash < total) {
+                alert("금액이 부족합니다. 총 결제 금액: " + total + " 원");
                 document.getElementById("cashPaid").focus();
                 return false;
             }
@@ -96,7 +109,7 @@
             <%
                 for(ProductDTO p : products) {
             %>
-            <tr onclick="selectProduct('<%=p.getProdId()%>', '<%=p.getProdName()%>', '<%=p.getPrice()%>')">
+            <tr onclick="selectProduct('<%=p.getProdId()%>', '<%=p.getProdName()%>', '<%=p.getPrice()%>', <%=p.getIsAdult()%>)">
                 <td><%=p.getProdName()%></td>
                 <td><%=p.getPrice()%> 원</td>
                 <td><%=p.getStock()%> 개</td>

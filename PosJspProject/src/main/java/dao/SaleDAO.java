@@ -28,8 +28,8 @@ public class SaleDAO {
 
             // 등록 후 CURRVAL 조회
             String currSql = "SELECT SALE_SEQ.CURRVAL FROM DUAL";
-            try(PreparedStatement currPstmt = conn.prepareStatement(currSql);
-                ResultSet rs = currPstmt.executeQuery()) {
+            try(PreparedStatement pre = conn.prepareStatement(currSql);
+                ResultSet rs = pre.executeQuery()) {
                 if(rs.next()) {
                     saleId = rs.getInt(1);
                 }
@@ -50,14 +50,14 @@ public class SaleDAO {
                 """;
 
         try(Connection conn = ConnectDB.getConnectionDB();
-            PreparedStatement pstmt = conn.prepareStatement(insertItemSql)) {
+            PreparedStatement pre = conn.prepareStatement(insertItemSql)) {
 
-            pstmt.setInt(1, saleId);
-            pstmt.setInt(2, prodId);
-            pstmt.setInt(3, quantity);
-            pstmt.setInt(4, subtotal);
+        	pre.setInt(1, saleId);
+        	pre.setInt(2, prodId);
+        	pre.setInt(3, quantity);
+        	pre.setInt(4, subtotal);
 
-            pstmt.executeUpdate();
+        	pre.executeUpdate();
 
         } catch(SQLException e) {
             System.out.println("insertSaleItem 오류: " + e.getMessage());
