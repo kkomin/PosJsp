@@ -23,9 +23,6 @@ public class InventoryService {
 
             inventoryDAO.addInventoryLog(selected.getProdId(), quantity);
             inventoryDAO.addProducts(selected.getProdId(), quantity);
-
-            System.out.printf("\n[%s] [%d개] 랜덤 입고 완료 (현재 재고: %d개)\n",
-                    selected.getProdName(), quantity, selected.getStock() + quantity);
         }
     }
 

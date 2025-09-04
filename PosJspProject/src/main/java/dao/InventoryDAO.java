@@ -24,18 +24,18 @@ public class InventoryDAO {
 	        String selectSql = """
 	                SELECT * FROM PRODUCTS ORDER BY PROD_ID ASC
 	                """;
-	        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)){
-	            ResultSet resultSet = preparedStatement.executeQuery();
+	        try (PreparedStatement pre = connection.prepareStatement(selectSql)){
+	            ResultSet rs = pre.executeQuery();
 	            // 전체 목록 조회
-	            while(resultSet.next()) {
+	            while(rs.next()) {
 	                // PRODUCTS -> prod_id, prod_name, company, expiration, is_adult, price, stock
-	                int id = resultSet.getInt("prod_id");
-	                String name = resultSet.getString("prod_name");
-	                String company = resultSet.getString("company");
-	                Date exp = resultSet.getDate("expiration");
-	                char adult = resultSet.getString("is_adult").charAt(0);
-	                int price = resultSet.getInt("price");
-	                int stock = resultSet.getInt("stock");
+	                int id = rs.getInt("prod_id");
+	                String name = rs.getString("prod_name");
+	                String company = rs.getString("company");
+	                Date exp = rs.getDate("expiration");
+	                char adult = rs.getString("is_adult").charAt(0);
+	                int price = rs.getInt("price");
+	                int stock = rs.getInt("stock");
 
 	                // 제품 객체 생성
 	                ProductDTO product = new ProductDTO(id, name, company, exp, adult, price, stock);
@@ -58,12 +58,12 @@ public class InventoryDAO {
 	                INSERT INTO INVENTORY_LOGS(LOG_ID, PROD_ID, QUANTITY, ARRIVAL_DATE)
 	                VALUES (INVENTORY_LOGS_ID_SEQ.NEXTVAL, ?, ?, SYSDATE)
 	                """;
-	        try (PreparedStatement preparedStatement = connection.prepareStatement(inventoryLogSql)) {
+	        try (PreparedStatement pre = connection.prepareStatement(inventoryLogSql)) {
 	            // 파라미터 바인딩
-	            preparedStatement.setInt(1, prodId);
-	            preparedStatement.setInt(2, quantity);
+	        	pre.setInt(1, prodId);
+	            pre.setInt(2, quantity);
 
-	            preparedStatement.executeUpdate();
+	            pre.executeUpdate();
 	        } catch (SQLException e) {
 	            System.out.println("INVENTORY INSERT 오류" + e.getMessage());
 	        }
