@@ -35,13 +35,24 @@ public class WorkLogDAO {
 	                log.setEmpId(rs.getInt("emp_id"));
 
 	                Timestamp loginTs = rs.getTimestamp("login_time");
+	                if (loginTs != null) {
+	                    log.setLoginTime(loginTs);
+	                }
+
 	                Timestamp logoutTs = rs.getTimestamp("logout_time");
+	                if (logoutTs != null) {
+	                    log.setLogoutTime(logoutTs);
+	                }
 
-	                // work_minutes, daily_wage - null 허용이므로 getInt 후 wasNull 체크
+	                
 	                int wm = rs.getInt("work_minutes");
+	                if (!rs.wasNull()) log.setHourlyWage(empId);
 
+	                
 	                // 직원의 기본 시급도 dto에 담기
 	                int hw = rs.getInt("hourly_wage");
+	                log.setHourlyWage(hw);
+	                
 
 	                return log;
 	            } else {

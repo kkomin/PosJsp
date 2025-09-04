@@ -11,57 +11,53 @@ import dao.WorkLogDAO;
 import dto.LoginLogDTO;
 
 public class WorkWageService {
-	// 로그아웃 처리 + 일급 계산
-    public LoginResult logout(LoginLogDTO user) throws SQLException {
-        try (Connection connection = ConnectDB.getConnectionDB()) {
-            WorkLogDAO dao = new WorkLogDAO();
+	public static class LoginResult {
+        private int logId;
+        private long workMinutes;
+        private int dailyWage;
+        private LocalDateTime logoutTime;
 
-            // 마지막 로그인 기록 가져오기
-            LoginLogDTO lastLog = dao.LastLoginLog(user.getEmpId());
+        // getter / setter
+        public int getLogId() { return logId; }
+        public void setLogId(int logId) { this.logId = logId; }
 
-            if (lastLog == null) {
-                return new LoginResult(0, 0); // 로그인 기록 없음
-            }
+        public long getWorkMinutes() { return workMinutes; }
+        public void setWorkMinutes(long workMinutes) { this.workMinutes = workMinutes; }
 
-            Timestamp loginTimestamp = lastLog.getLoginTime();
-            LocalDateTime loginTime = loginTimestamp.toLocalDateTime();
-            LocalDateTime logoutTime = LocalDateTime.now();
+        public int getDailyWage() { return dailyWage; }
+        public void setDailyWage(int dailyWage) { this.dailyWage = dailyWage; }
 
-            // 근무 시간 계산 (분)
-            long workMinutes = Duration.between(loginTime, logoutTime).toMinutes();
-
-            // DB에서 기본 시급 가져오기
-            int hourlyWage = lastLog.getHourlyWage();
-            if (hourlyWage <= 0) {
-                System.out.println("[WARN] logout: hourlyWage is " + hourlyWage + " for empId=" + user.getEmpId());
-            }
-
-            // 일급 계산
-            int dailyWage = (int) Math.round(((double) hourlyWage / 60) * workMinutes);
-
-            // DB 업데이트
-            dao.updateLogout(lastLog.getLogId(), logoutTime, workMinutes, dailyWage);
-
-            return new LoginResult(workMinutes, dailyWage);
-        }
+        public LocalDateTime getLogoutTime() { return logoutTime; }
+        public void setLogoutTime(LocalDateTime logoutTime) { this.logoutTime = logoutTime; }
     }
+	
+	// 로그아웃 처리 + 일급 계산
+	public LoginResult logout(LoginLogDTO dto) {
+        WorkLogDAO dao = new WorkLogDAO();
 
-    // 일급 계산 결과 담을 DTO
-    public static class LoginResult {
-        private final long workMinutes;
-        private final int dailyWage;
-
-        public LoginResult(long workMinutes, int dailyWage) {
-            this.workMinutes = workMinutes;
-            this.dailyWage = dailyWage;
+        // 마지막 로그인 기록 가져오기
+        LoginLogDTO lastLog = dao.LastLoginLog(dto.getEmpId());
+        if(lastLog == null) {
+            return null; // 로그인 기록이 없으면 null 반환
         }
 
-        public long getWorkMinutes() {
-            return workMinutes;
-        }
+        LocalDateTime logoutTime = LocalDateTime.now();
+        long workMinutes = java.time.Duration.between(
+                lastLog.getLoginTime().toLocalDateTime(), logoutTime).toMinutes();
 
-        public int getDailyWage() {
-            return dailyWage;
-        }
+        // 일급 계산 (분 단위)
+        int dailyWage = (int)(workMinutes * lastLog.getHourlyWage() / 60);
+
+        // DB에 로그아웃 기록 업데이트
+        dao.updateLogout(lastLog.getLogId(), logoutTime, workMinutes, dailyWage);
+
+        // 결과 객체 생성
+        LoginResult result = new LoginResult();
+        result.setLogId(lastLog.getLogId());
+        result.setWorkMinutes(workMinutes);
+        result.setDailyWage(dailyWage);
+        result.setLogoutTime(logoutTime);
+
+        return result;
     }
 }

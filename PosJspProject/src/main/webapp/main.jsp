@@ -94,7 +94,7 @@
 	        <img src="images/search.png" class="image">
 	        <p>제품 조회</p>
         </div>
-        <div class="store-container" onclick="location.href='store.jsp'">
+        <div class="store-container" onclick="location.href='inventory.jsp'">
 	        <img src="images/search.png" class="image">
 	        <p>입고 처리</p>
         </div>
@@ -110,13 +110,9 @@
 	        <img src="images/search.png" class="image">
 	        <p>매출 조회</p>
         </div>
-        <div class="dailywages-container" onclick="location.href='logout.jsp'">
+        <div class="dailywages-container" onclick="location.href='dailywage.jsp'">
 	        <img src="images/search.png" class="image">
-	        <p>일급 정산</p>
-        </div>
-        <div class="end-container" onclick="location.href='end.jsp'">
-	        <img src="images/search.png" class="image">
-	        <p>종 료</p>
+	        <p>일급 정산 및 종료</p>
         </div>
     </div>
     </div>
