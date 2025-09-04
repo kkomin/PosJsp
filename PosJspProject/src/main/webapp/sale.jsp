@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="DB.ConnectDB"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.getSalesDAO"%>
 <%@page import="dto.SalesDTO"%>
@@ -11,11 +15,34 @@
 </head>
 <body>
 	<h2>매출 조회 결과</h2>
-	
-	<form action="sale.jsp" method="get">
-    <input type="text" placeholder="날짜 입력(YYYYMMDD)" name="date" />
+	<%
+    // DB에서 중복 없는 날짜 조회
+    List<String> dates = new java.util.ArrayList<>();
+    try(Connection conn = ConnectDB.getConnectionDB()) {
+        String sql = "SELECT DISTINCT TO_CHAR(sale_date, 'YYYYMMDD') AS sale_date_str FROM SALES ORDER BY sale_date_str";
+        try(PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                dates.add(rs.getString("sale_date_str"));
+            }
+        }
+    } catch(Exception e) {
+        out.println("날짜 조회 오류: " + e.getMessage());
+    }
+%>
+
+<form action="sale.jsp" method="get">
+    <label>조회할 날짜:</label>
+    <select name="date">
+    <option value="">날짜 선택</option>
+        <% for(String d : dates) { %>
+            <option value="<%=d%>" <%= d.equals(request.getParameter("date")) ? "selected" : "" %>><%=d%></option>
+        <% } %>
+    </select>
     <input type="submit" value="조회" />
-	</form>
+</form>
+
+<br/>
 	
 	<br/>
 	
